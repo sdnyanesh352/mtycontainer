@@ -1,5 +1,7 @@
 package com.universal.containx.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +21,7 @@ public class QuestionModel {
 	private String companyname;
 	private int [] rating;
 	private String customCompany;
+	private List<Integer> qrating;
 	
 
 }
