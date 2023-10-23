@@ -1,5 +1,6 @@
 package com.universal.containx.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
@@ -13,5 +14,6 @@ public class QuestionDao {
 	private int [] rating;
 	private String customCompany;
 	private List<Integer> qrating;
+	
 
 }
