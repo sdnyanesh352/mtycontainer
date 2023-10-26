@@ -11,7 +11,6 @@ public class QuestionDao {
 	private String question;
 	private String answer;
 	private String companyname;
-	private int [] rating;
 	private String customCompany;
 	private List<Integer> qrating;
 	

@@ -46,14 +46,10 @@ public class QuestionController {
 	}
 	
 	 @PatchMapping("/ratings/{id}/{rating}")
-
 	    public ResponseEntity<Void> postQuestionRating(@PathVariable("id") Long id,@PathVariable("rating") Integer rating ) throws Exception {
-
-	        
 	        System.out.println("q id is "+ id + " Rating is "+ rating);
 	        Optional<QuestionModel> question = questionRepository.findById(id);
 	        if (question.isPresent()) {
-
 	            QuestionModel questionmodel = question.get();
 	            List<Integer> currentQratings = questionmodel.getQrating();
 	            if(currentQratings==null) {
@@ -62,8 +58,6 @@ public class QuestionController {
 	            if (rating >= 0 ) {
 	            	currentQratings.add(rating);
 	            	questionmodel.setQrating(currentQratings);
-	            	
-
 	                questionRepository.save(questionmodel);
 	                System.out.println("questionmodel :"+questionmodel);
 	                return ResponseEntity.ok().build();
