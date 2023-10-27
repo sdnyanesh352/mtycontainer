@@ -9,7 +9,7 @@ import com.universal.containx.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	User findByEmail(String email);
+	public User findByEmail(String email);
 
 	public  User findByUsername(String username) ;
 }

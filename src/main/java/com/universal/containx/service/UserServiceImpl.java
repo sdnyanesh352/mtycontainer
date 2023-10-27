@@ -153,8 +153,19 @@ public class UserServiceImpl implements UserService{
 	public String login(LoginRequest request) {
 		// TODO Auto-generated method stub
 		
-		User storedUser = userRepository.findByUsername(request.getUsername());
-		if(storedUser!=null &&storedUser.getPassword().equals(request.getPassword())) {
+		User currentUser = userRepository.findByEmail(request.getEmail());
+		System.out.println("Strored user is  "+currentUser.toString());
+		System.out.println("password is "+currentUser.getPassword());
+		if(currentUser!=null &&currentUser.getPassword().equals(request.getPassword())) {
+			
+				 LoginHistory loginHistory = new LoginHistory();
+				    loginHistory.setLoginTime(LocalDateTime.now().minusDays(0));
+				    loginHistory.setUserHistory(currentUser);
+				    //currentUser.setLastLogin(Instant.now());
+				    currentUser.addLoginHistory(loginHistory);
+				    userRepository.save(currentUser);
+			 
+			
 			return "Login Successful!";
 		}
 		else {
