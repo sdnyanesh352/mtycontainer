@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,10 +25,10 @@ import com.universal.containx.model.User;
 import com.universal.containx.repository.CoinTransactionRepository;
 import com.universal.containx.repository.ReferralRepository;
 import com.universal.containx.repository.UserRepository;
-
 @Component
 public class UserServiceImpl implements UserService{
-
+	
+private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
     private static final Integer COINS_PER_REFERRAL = 10;
 	@Autowired
 	UserRepository userRepository;
@@ -59,6 +61,7 @@ public class UserServiceImpl implements UserService{
                         .setTransactionType(TransactionType.REFERRAL_BONUS)
                         .setCreatedDate(Date.from(Instant.now()));
                 coinTransactionRepository.save(coinTransaction);
+                logger.info("Saved CoinTransaction successfully");
 
                 user.setCoins(user.getCoins() + userDto.getCoins());
                 userRepository.save(user);
