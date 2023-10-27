@@ -38,6 +38,10 @@ public class AdminController {
 	@PostMapping("/sign-in")
 	public ResponseEntity<Map<String, Object>> loginUser(@RequestBody LoginRequest request) {
 	    System.out.println(request.toString() + " time: " + LocalDateTime.now());
+	    if(request.getLoginType().equals("googleAuth")) {
+	    	System.out.println(" logged in with gauth");
+	    	
+	    }
 	 
 	    // You can include additional data in the response if needed
 	    Map<String, Object> response = new HashMap();

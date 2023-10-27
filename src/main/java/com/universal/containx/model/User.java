@@ -3,6 +3,7 @@ package com.universal.containx.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 
@@ -33,6 +34,7 @@ import jakarta.persistence.Table;
 @Setter
 @Accessors(chain = true)
 @Entity
+@ToString
 @Table(name = "user",
         indexes = @Index(
                 name = "idx_user_email",

@@ -133,6 +133,7 @@ private static final Logger logger = LogManager.getLogger(UserServiceImpl.class)
 	public void SetLoginHistory() {
 		// TODO Auto-generated method stub
 		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 System.out.println("calling from Authentication spring "+ authentication.toString());
 		 String currentUserEmail = authentication.getName();
 		 User currentUser = userRepository.findByEmail(currentUserEmail);
 		    // create new login history
@@ -154,26 +155,41 @@ private static final Logger logger = LogManager.getLogger(UserServiceImpl.class)
 
 	@Override
 	public String login(LoginRequest request) {
-		// TODO Auto-generated method stub
-		
-		User currentUser = userRepository.findByEmail(request.getEmail());
-		System.out.println("Strored user is  "+currentUser.toString());
-		System.out.println("password is "+currentUser.getPassword());
-		if(currentUser!=null &&currentUser.getPassword().equals(request.getPassword())) {
-			
-				 LoginHistory loginHistory = new LoginHistory();
-				    loginHistory.setLoginTime(LocalDateTime.now().minusDays(0));
-				    loginHistory.setUserHistory(currentUser);
-				    //currentUser.setLastLogin(Instant.now());
-				    currentUser.addLoginHistory(loginHistory);
-				    userRepository.save(currentUser);
-			 
-			
-			return "Login Successful!";
-		}
-		else {
-			return "Login failed ";
-		}
+	    User currentUser = userRepository.findByEmail(request.getEmail());
+	    if(request.getLoginType().equals("googleAuth")) {
+	    	LoginHistory loginHistory = new LoginHistory();
+	        loginHistory.setLoginTime(LocalDateTime.now().minusDays(0));
+	        loginHistory.setUserHistory(currentUser);
+	        currentUser.addLoginHistory(loginHistory);
+	        userRepository.save(currentUser);
+	 
+	        return "Login Successful!";
+	    	
+	    }else {
+	        if (currentUser.getPassword().equals(request.getPassword())) {
+		        LoginHistory loginHistory = new LoginHistory();
+		        loginHistory.setLoginTime(LocalDateTime.now().minusDays(0));
+		        loginHistory.setUserHistory(currentUser);
+		        currentUser.addLoginHistory(loginHistory);
+		        userRepository.save(currentUser);
+		 
+		        return "Login Successful!";
+		    }
+	    	
+	    }
+	 
+	    System.out.println("Stored user is " + currentUser.toString());
+	 
+	    if (currentUser.getPassword() == null) {
+	        // Handle the case when the user's password is null
+	        return "Password not set for the user";
+	    }
+	 
+	    System.out.println("password is " + currentUser.getPassword());
+	 
+	
+	 
+	    // Handle the case when login fails
+	    return "Login Failed";
 	}
-
 }
